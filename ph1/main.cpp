@@ -11,7 +11,7 @@ using namespace std;
 std::unordered_map< std::string, Node >   mapNode;
 std::unordered_map< size_t, std::string > mapNodeId;
 std::vector< size_t >                     nodesOrder;
-int                                       nodeId = 0;
+size_t                                    nodeId = 0;
 std::vector< std::string >                outputNode;
 std::vector< bool >                       nodeVal;
 
@@ -64,8 +64,8 @@ auto main( int /*argc*/, char *argv [] ) -> int
 }
 auto getFromBracket( string st ) -> string
 {
-    bool   left  = false;
-    bool   right = false;
+    auto   left  = false;
+    auto   right = false;
     string name;
     for ( char i : st )
     {
@@ -115,8 +115,8 @@ auto filterSpace( string st ) -> string
 }
 void addInput( string st )
 {
-    string name = filterSpace( getFromBracket( std::move( st ) ) );
-    int    id   = nodeId;
+    auto name = filterSpace( getFromBracket( std::move( st ) ) );
+    auto id   = nodeId;
     nodeId++;
     Node x;
     x.gateType      = INPUT;
@@ -127,18 +127,18 @@ void addInput( string st )
 }
 void addOutput( string st )
 {
-    string name = filterSpace( getFromBracket( std::move( st ) ) );
+    auto name = filterSpace( getFromBracket( std::move( st ) ) );
     outputNode.emplace_back( name );
 }
 void addGate( string st )
 {
-    auto   equal      = st.find_first_of( '=' );
-    auto   leftB      = st.find_first_of( '(' );
-    auto   rightB     = st.find_first_of( ')' );
-    string outputNode = filterSpace( st.substr( 0, equal ) );
-    string gateType   = filterSpace( st.substr( equal + 1, leftB - equal - 1 ) );
-    string inputNodes = getFromBracket( st.substr( leftB, rightB - leftB ) );
-    Node   x;
+    auto equal      = st.find_first_of( '=' );
+    auto leftB      = st.find_first_of( '(' );
+    auto rightB     = st.find_first_of( ')' );
+    auto outputNode = filterSpace( st.substr( 0, equal ) );
+    auto gateType   = filterSpace( st.substr( equal + 1, leftB - equal - 1 ) );
+    auto inputNodes = getFromBracket( st.substr( leftB, rightB - leftB ) );
+    Node x;
     if ( mapNode.find( outputNode ) != mapNode.end( ) )
     {
         x = mapNode.find( outputNode )->second;
@@ -220,7 +220,7 @@ auto getGateType( string st ) -> GateType
 auto getFromComma( string st ) -> vector< string >
 {
     vector< string > ans;
-    string           str = std::move( st );
+    auto             str = std::move( st );
     while ( true )
     {
         auto pos = str.find_first_of( ',' );
